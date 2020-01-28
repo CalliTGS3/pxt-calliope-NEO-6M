@@ -35,7 +35,7 @@ namespace NEO6M_GPS {
     const DEC = ".";
 
     //% blockId="serial_buffersize" block="serial receive buffer size %size"
-    //% shim=neo6mgps::setReceiveBufferSize
+    //% shim=NEO6M_GPS::setReceiveBufferSize
     export function setReceiveBufferSize(size: number): void {
         return;
     }
