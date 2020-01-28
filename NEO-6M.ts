@@ -36,7 +36,7 @@ namespace neo6mgps {
     const DEC = ".";
 
     //% blockId="serial_buffersize" block="serial receive buffer size %size"
-    //% shim=neo6mgps::setReceiveBufferSize
+    //shim=neo6mgps::setReceiveBufferSize
     export function setReceiveBufferSize(size: number): void {
         return;
     }
