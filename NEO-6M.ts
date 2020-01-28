@@ -3,7 +3,6 @@
  * Serial interface
  * 
  * @author Raik Andritschke
- *
  */
 
 enum GPS_Format {
