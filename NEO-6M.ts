@@ -20,11 +20,8 @@ enum GPS_Format {
 //% weight=20 color=#0fbc11 icon=""
 namespace neo6mgps {
 
-//    let TX = SerialPin.C17;
-//    let RX = SerialPin.C16;
-// temp
-    let TX = 0;
-    let RX = 0;
+    let TX = SerialPin.C17;
+    let RX = SerialPin.C16;
     let BAUD = BaudRate.BaudRate9600;
     let GPS_FORMAT = GPS_Format.DEG_DEC;
     let received = "";
@@ -38,6 +35,12 @@ namespace neo6mgps {
     let SEC = "″";
     const DEC = ".";
 
+    //% blockId="serial_buffersize" block="serial receive buffer size %size"
+    //% shim=neo6mgps::setReceiveBufferSize
+    export function setReceiveBufferSize(size: number): void {
+        return;
+    }
+
     //% blockId="init" block="Initialisiere Serielle Schnittstelle mit TX Pin %tx | RX Pin %rx | Baudrate %baud"
     //% tx.defl=SerialPin.C17
     //% rx.defl=SerialPin.C16
@@ -48,8 +51,7 @@ namespace neo6mgps {
         RX = rx;
         BAUD = baud;
         serial.redirect(TX, RX, BAUD);
-// temp
-//        serial.setReceiveBufferSize(100)
+        setReceiveBufferSize(100)
     }
 
     //% blockId="setUnits" block="Setze GPS Einheiten auf Grad: %deg | Minuten: %mns | Sekunden: %sec"
