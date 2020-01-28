@@ -36,7 +36,7 @@ namespace neo6mgps {
     const DEC = ".";
 
     //% blockId="serial_buffersize" block="serial receive buffer size %size"
-    //shim=neo6mgps::setReceiveBufferSize
+    //% shim=neo6mgps::setReceiveBufferSize
     export function setReceiveBufferSize(size: number): void {
         return;
     }
@@ -51,11 +51,14 @@ namespace neo6mgps {
         RX = rx;
         BAUD = baud;
         serial.redirect(TX, RX, BAUD);
-        serial.setReceiveBufferSize(100)
+        setReceiveBufferSize(100)
     }
 
     //% blockId="setUnits" block="Setze GPS Einheiten auf Grad: %deg | Minuten: %mns | Sekunden: %sec"
     //% expandableArgumentMode="toggle"
+    //% deg.defl=":"
+    //% mns.defl=":"
+    //% sec.defl=":"
     export function setUnits(deg: string, mns: string, sec: string) {
         if (deg.length > 0) { DEG = deg.substr(0, 1) }
         if (mns.length > 0) { MNS = mns.substr(0, 1) }
@@ -63,6 +66,7 @@ namespace neo6mgps {
     }
 
     //% blockId="setFormat" block="Setze GPS Format auf %gpsFormat"
+    //% gpsFormat.defl=GPS_format.DEG_MIN_SEC
     export function setFormat(gpsFormat: GPS_Format) {
         GPS_FORMAT = gpsFormat;
     }
