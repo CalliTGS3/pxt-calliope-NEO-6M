@@ -51,7 +51,7 @@ namespace neo6mgps {
         RX = rx;
         BAUD = baud;
         serial.redirect(TX, RX, BAUD);
-        setReceiveBufferSize(100)
+        serial.setReceiveBufferSize(100)
     }
 
     //% blockId="setUnits" block="Setze GPS Einheiten auf Grad: %deg | Minuten: %mns | Sekunden: %sec"
