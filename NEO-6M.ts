@@ -17,7 +17,7 @@ enum GPS_Format {
 }
 
 //% weight=20 color=#0fbc11 icon=""
-namespace neo6mgps {
+namespace NEO6M_GPS {
 
     let TX = SerialPin.C17;
     let RX = SerialPin.C16;
