@@ -149,7 +149,7 @@ namespace NEO6M_GPS {
         return gprmc;
     }
 
-    //% blockId="getTime" block="Lese Uhrzeit"
+    //% blockId="getTime" block="Lese Satelliten Uhrzeit"
     export function getTime(): string {
         if ((gpgga.length > 0) && (getGPGGA().length > 0) && (getGPGGA().get(0))) {
             return getGPGGA().get(0);
