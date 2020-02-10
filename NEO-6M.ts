@@ -37,8 +37,8 @@ namespace NEO6M_GPS {
     const UBX_TIMEOUT = 2000; // ms
 
     // blockId="serial_buffersize" block="serial receive buffer size %size"
-    // shim=NEO6M_GPS::setReceiveBufferSize
-    export function setReceiveBufferSize(size: number): void {
+    //% shim=NEO6M_GPS::setReceiveBufferSize
+    function setReceiveBufferSize(size: number): void {
         return;
     }
 
