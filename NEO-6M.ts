@@ -6,13 +6,13 @@
  */
 
 enum GPS_Format {
-    //% blockId="DEG_MIN" block="hddd.ddddd°"
+    //% blockId="DEG_MIN" block="hddd.ddddd"
     DEG_DEC,
-    //% blockId="DEG_MIN_DEC" block="hddd° mm.mmm′"
+    //% blockId="DEG_MIN_DEC" block="hddd mm.mmm"
     DEG_MIN_DEC,
-    //% blockId="DEG_MIN_SEC" block="hddd° mm′ ss.ss″"
+    //% blockId="DEG_MIN_SEC" block="hddd mm ss.ss"
     DEG_MIN_SEC,
-    //% blockId="SIGNED_DEG_DEC" block="±ddd.ddddd°"
+    //% blockId="SIGNED_DEG_DEC" block="±ddd.ddddd"
     SIGNED_DEG_DEC
 }
 
@@ -29,44 +29,46 @@ namespace NEO6M_GPS {
     let gpgga = "";
     let gpvtg = "";
     let gprmc = "";
+    let pubx = "";
     let DEG = "°";
     let MNS = "′";
     let SEC = "″";
     const DEC = ".";
+    const UBX_TIMEOUT = 2000; // ms
 
-    //% blockId="serial_buffersize" block="serial receive buffer size %size"
-    //% shim=NEO6M_GPS::setReceiveBufferSize
+    // blockId="serial_buffersize" block="serial receive buffer size %size"
+    // shim=NEO6M_GPS::setReceiveBufferSize
     export function setReceiveBufferSize(size: number): void {
         return;
     }
 
-    //% blockId="init" block="Initialisiere Serielle Schnittstelle mit TX Pin %tx | RX Pin %rx | Baudrate %baud"
+    //% blockId="initGPS" block="Initialisiere Serielle Schnittstelle mit TX Pin %tx | RX Pin %rx | Baudrate %baud"
     //% tx.defl=SerialPin.C17
     //% rx.defl=SerialPin.C16
     //% baud.defl=BaudRate.BaudRate9600
-    export function init(tx: SerialPin, rx: SerialPin, baud: BaudRate): void {
+    export function initGPS(tx: SerialPin, rx: SerialPin, baud: BaudRate): void {
         // initialize serial port
         TX = tx;
         RX = rx;
         BAUD = baud;
         serial.redirect(TX, RX, BAUD);
-        setReceiveBufferSize(100)
+        setReceiveBufferSize(120)
     }
 
-    //% blockId="setUnits" block="Setze GPS Einheiten auf Grad: %deg | Minuten: %mns | Sekunden: %sec"
+    //% blockId="setGPSUnits" block="Setze GPS Einheiten auf Grad: %deg | Minuten: %mns | Sekunden: %sec"
     //% expandableArgumentMode="toggle"
     //% deg.defl=":"
     //% mns.defl=":"
     //% sec.defl=":"
-    export function setUnits(deg: string, mns: string, sec: string) {
+    export function setGPSUnits(deg: string, mns: string, sec: string) {
         if (deg.length > 0) { DEG = deg.substr(0, 1) }
         if (mns.length > 0) { MNS = mns.substr(0, 1) }
         if (sec.length > 0) { SEC = sec.substr(0, 1) }
     }
 
-    //% blockId="setFormat" block="Setze GPS Format auf %gpsFormat"
+    //% blockId="setGPSFormat" block="Setze GPS Format auf %gpsFormat"
     //% gpsFormat.defl=GPS_format.DEG_MIN_SEC
-    export function setFormat(gpsFormat: GPS_Format) {
+    export function setGPSFormat(gpsFormat: GPS_Format) {
         GPS_FORMAT = gpsFormat;
     }
 
@@ -106,11 +108,14 @@ namespace NEO6M_GPS {
             if (received.substr(1, 5) == "GPRMC") {
                 gprmc = received.substr(7, received.length - 7)
             }
+            if (received.substr(1, 4) == "PUBX") {
+                pubx = received.substr(6, received.length - 6)
+            }
         }
     })
 
-    //% blockId="getReceived" block="Lese empfangene Zeichenkette"
-    export function getReceived(): string {
+    //% blockId="getGPSReceived" block="Lese empfangene Zeichenkette"
+    export function getGPSReceived(): string {
         return received;
     }
 
@@ -149,8 +154,8 @@ namespace NEO6M_GPS {
         return gprmc;
     }
 
-    //% blockId="getTime" block="Lese Satelliten Uhrzeit"
-    export function getTime(): string {
+    //% blockId="getGPSTime" block="Lese Satelliten Uhrzeit"
+    export function getGPSTime(): string {
         if ((gpgga.length > 0) && (getGPGGA().length > 0) && (getGPGGA().get(0))) {
             return getGPGGA().get(0);
         } else {
@@ -158,8 +163,8 @@ namespace NEO6M_GPS {
         }
     }
 
-    //% blockId="getFix" block="Lese GPS Fix"
-    export function getFix(): boolean {
+    //% blockId="getGPSFix" block="Lese GPS Fix"
+    export function getGPSFix(): boolean {
         if ((gpgga.length > 0) && (getGPGGA().length > 0) && (getGPGGA().get(5))) {
             return (getGPGGA().get(5) == "1");
         } else {
@@ -167,8 +172,8 @@ namespace NEO6M_GPS {
         }
     }
 
-    //% blockId="getCountSat" block="Lese Anzahl der Satelliten"
-    export function getCountSat(): number {
+    //% blockId="getGPSCountSat" block="Lese Anzahl der Satelliten"
+    export function getGPSCountSat(): number {
         if ((gpgga.length > 0) && (getGPGGA().length > 0) && (getGPGGA().get(6))) {
             return parseInt(getGPGGA().get(6));
         } else {
@@ -176,7 +181,7 @@ namespace NEO6M_GPS {
         }
     }
 
-    //% blockId="getAltitude" block="Lese Höhe"
+    //% blockId="getGPSAltitude" block="Lese Höhe"
     export function getAltitude(): string {
         if ((gpgga.length > 0) && (getGPGGA().length > 0) && (getGPGGA().get(8))) {
             return getGPGGA().get(8);
@@ -185,8 +190,8 @@ namespace NEO6M_GPS {
         }
     }
 
-    //% blockId="getSpeed" block="Lese Geschwindigkeit"
-    export function getSpeed(): string {
+    //% blockId="getGPSSpeed" block="Lese Geschwindigkeit"
+    export function getGPSSpeed(): string {
         if ((gprmc.length > 0) && (getGPRMC().length > 0) && (getGPRMC().get(6))) {
             return getGPRMC().get(6);
         } else {
@@ -194,8 +199,8 @@ namespace NEO6M_GPS {
         }
     }
 
-    //% blockId="getTrackAngle" block="Lese Bewegungswinkel"
-    export function getTrackAngle(): string {
+    //% blockId="getGPSTrackAngle" block="Lese Bewegungswinkel"
+    export function getGPSTrackAngle(): string {
         if ((gprmc.length > 0) && (getGPRMC().length > 0) && (getGPRMC().get(7))) {
             return getGPRMC().get(7);
         } else {
@@ -239,9 +244,9 @@ namespace NEO6M_GPS {
         }
     }
 
-    //% blockId="getLatitude" block="Lese Geographische Länge"
+    //% blockId="getGPSLatitude" block="Lese Geographische Länge"
     //% expandableArgumentMode="toggle"
-    export function getLatitude(gpsFormat?: GPS_Format): string {
+    export function getGPSLatitude(gpsFormat?: GPS_Format): string {
         if (!gpsFormat) { gpsFormat = GPS_FORMAT }
         if ((gpgga.length > 0) && (getGPGGA().length > 0) && (getGPGGA().get(1)) && (getGPGGA().get(2))) {
             // (1) ddmm.mmmmm
@@ -272,9 +277,9 @@ namespace NEO6M_GPS {
         }
     }
 
-    //% blockId="getLongitude" block="Lese Geographische Breite"
+    //% blockId="getGPSLongitude" block="Lese Geographische Breite"
     //% expandableArgumentMode="toggle"
-    export function getLongitude(gpsFormat?: GPS_Format): string {
+    export function getGPSLongitude(gpsFormat?: GPS_Format): string {
         if (!gpsFormat) { gpsFormat = GPS_FORMAT }
         if ((gpgga.length > 0) && (getGPGGA().length > 0) && (getGPGGA().get(3)) && (getGPGGA().get(4))) {
             // (3) ddmm.mmmmm
@@ -309,26 +314,47 @@ namespace NEO6M_GPS {
         }
     }
 
-    //% blockId="getGoogleDMS" block="Lese Google Koordinaten im Format GMS"
-    export function getGoogleDMS(): string {
+    //% blockId="getGPSGoogleDMS" block="Lese Google Koordinaten im Format GMS"
+    export function getGPSGoogleDMS(): string {
         // gg°mm'ss.ss"h gg°mm'ss.ss"h
-        let latitude = getLatitude(GPS_Format.DEG_MIN_SEC);
-        let longitude = getLongitude(GPS_Format.DEG_MIN_SEC);
+        let latitude = getGPSLatitude(GPS_Format.DEG_MIN_SEC);
+        let longitude = getGPSLongitude(GPS_Format.DEG_MIN_SEC);
         if (latitude && longitude) {
             return latitude.substr(1) + latitude.substr(0, 1) + " " + longitude.substr(1) + longitude.substr(0, 1);
         }
         return "";
     }
 
-    //% blockId="getGoogleDD" block="Lese Google Koordinaten im Format G"
-    export function getGoogleDD(): string {
+    //% blockId="getGPSGoogleDD" block="Lese Google Koordinaten im Format G"
+    export function getGPSGoogleDD(): string {
         // gg.ddddd, gg.ddddd
-        let latitude = getLatitude(GPS_Format.DEG_DEC);
-        let longitude = getLongitude(GPS_Format.DEG_DEC);
+        let latitude = getGPSLatitude(GPS_Format.DEG_DEC);
+        let longitude = getGPSLongitude(GPS_Format.DEG_DEC);
         if (latitude && longitude) {
             return latitude.substr(1) + ", " + longitude.substr(1);
         }
         return "";
+    }
+
+    //% blockId="requestByUBXMsg" block="Lese Antwort mit UBX"
+    export function requestByUBXMsg(command: string): string {
+        pubx = "";
+        serial.writeLine(command);
+        let starttime = input.runningTime();
+        while (((input.runningTime() - starttime) < UBX_TIMEOUT) && (pubx.length == 0)) {
+            basic.pause(100);
+        }
+        return pubx;
+    }
+
+    //% blockId="getUBXPositionString" block="Lese UBX Position Zeichenkette"
+    export function getUBXPositionString(): string {
+        return requestByUBXMsg("$PUBX,00*33");
+    }
+
+    //% blockId="getUBXPosition" block="Lese UBX Position"
+    export function getUBXPosition(): Array<string> {
+        return string2array(requestByUBXMsg("$PUBX,00*33"), ",");
     }
 
 }
