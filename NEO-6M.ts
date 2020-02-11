@@ -67,7 +67,7 @@ namespace NEO6M_GPS {
     }
 
     //% blockId="setGPSFormat" block="Setze GPS Format auf %gpsFormat"
-    //% gpsFormat.defl=GPS_Format.DEG_MIN_SEC
+    //% gpsFormat.defl="hddd° mm′ ss.ss″"
     export function setGPSFormat(gpsFormat: GPS_Format) {
         GPS_FORMAT = gpsFormat;
     }
