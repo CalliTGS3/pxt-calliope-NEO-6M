@@ -6,13 +6,13 @@
  */
 
 enum GPS_Format {
-    //% blockId="DEG_MIN" block="hddd.ddddd"
+    //% blockId="DEG_MIN" block="hddd.ddddd°"
     DEG_DEC,
-    //% blockId="DEG_MIN_DEC" block="hddd mm.mmm"
+    //% blockId="DEG_MIN_DEC" block="hddd° mm.mmm′"
     DEG_MIN_DEC,
-    //% blockId="DEG_MIN_SEC" block="hddd mm ss.ss"
+    //% blockId="DEG_MIN_SEC" block="hddd° mm′ ss.ss″"
     DEG_MIN_SEC,
-    //% blockId="SIGNED_DEG_DEC" block="±ddd.ddddd"
+    //% blockId="SIGNED_DEG_DEC" block="±ddd.ddddd°"
     SIGNED_DEG_DEC
 }
 
@@ -67,7 +67,7 @@ namespace NEO6M_GPS {
     }
 
     //% blockId="setGPSFormat" block="Setze GPS Format auf %gpsFormat"
-    //% gpsFormat.defl=GPS_format.DEG_MIN_SEC
+    //% gpsFormat.defl=GPS_Format.DEG_MIN_SEC
     export function setGPSFormat(gpsFormat: GPS_Format) {
         GPS_FORMAT = gpsFormat;
     }
