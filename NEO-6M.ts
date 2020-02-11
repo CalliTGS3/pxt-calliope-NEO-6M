@@ -52,11 +52,11 @@ namespace NEO6M_GPS {
         RX = rx;
         BAUD = baud;
         serial.redirect(TX, RX, BAUD);
-        setReceiveBufferSize(120)
+        setReceiveBufferSize(120);
     }
 
     //% blockId="setGPSUnits" block="Setze GPS Einheiten auf Grad: %deg | Minuten: %mns | Sekunden: %sec"
-    //% expandableArgumentMode="toggle"
+    // expandableArgumentMode="toggle"
     //% deg.defl=":"
     //% mns.defl=":"
     //% sec.defl=":"
@@ -336,7 +336,7 @@ namespace NEO6M_GPS {
         return "";
     }
 
-    //% blockId="requestByUBXMsg" block="Lese Antwort mit UBX"
+    //% blockId="requestByUBXMsg" block="Lese Antwort mit UBX auf Abfrage %command"
     export function requestByUBXMsg(command: string): string {
         pubx = "";
         serial.writeLine(command);
