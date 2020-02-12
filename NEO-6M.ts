@@ -6,13 +6,13 @@
  */
 
 enum GPS_Format {
-    //% blockId="DEG_MIN" block="hddd.ddddd°"
+    //% block="hddd.ddddd°"
     DEG_DEC,
-    //% blockId="DEG_MIN_DEC" block="hddd° mm.mmm′"
+    //% block="hddd° mm.mmm′"
     DEG_MIN_DEC,
-    //% blockId="DEG_MIN_SEC" block="hddd° mm′ ss.ss″"
+    //% block="hddd° mm′ ss.ss″"
     DEG_MIN_SEC,
-    //% blockId="SIGNED_DEG_DEC" block="±ddd.ddddd°"
+    //% block="±ddd.ddddd°"
     SIGNED_DEG_DEC
 }
 
@@ -56,7 +56,6 @@ namespace NEO6M_GPS {
     }
 
     //% blockId="setGPSUnits" block="Setze GPS Einheiten auf Grad: %deg | Minuten: %mns | Sekunden: %sec"
-    // expandableArgumentMode="toggle"
     //% deg.defl=":"
     //% mns.defl=":"
     //% sec.defl=":"
@@ -115,41 +114,49 @@ namespace NEO6M_GPS {
     })
 
     //% blockId="getGPSReceived" block="Lese empfangene Zeichenkette"
+    //% advanced=true
     export function getGPSReceived(): string {
         return received;
     }
 
     //% blockId="getGPGLL" block="Lese GPGLL"
+    //% advanced=true
     export function getGPGLL(): Array<string> {
         return string2array(gpgll, ",");
     }
 
     //% blockId="getGPGSV" block="Lese GPGSV"
+    //% advanced=true
     export function getGPGSV(): Array<string> {
         return string2array(gpgsv, ",");
     }
 
     //% blockId="getGPGGA" block="Lese GPGGA"
+    //% advanced=true
     export function getGPGGA(): Array<string> {
         return string2array(gpgga, ",");
     }
 
     //% blockId="getGPGGAString" block="Lese GPGGA Zeichenkette"
+    //% advanced=true
     export function getGPGGAString(): string {
         return gpgga;
     }
 
     //% blockId="getGPVTG" block="Lese GPVTG"
+    //% advanced=true
     export function getGPVTG(): Array<string> {
         return string2array(gpvtg, ",");
     }
 
     //% blockId="getGPRMC" block="Lese GPRMC"
+    //% advanced=true
     export function getGPRMC(): Array<string> {
         return string2array(gprmc, ",");
     }
 
     //% blockId="getGPRMCString" block="Lese GPRMC Zeichenkette"
+    //% advanced=true
     export function getGPRMCString(): string {
         return gprmc;
     }
@@ -337,6 +344,7 @@ namespace NEO6M_GPS {
     }
 
     //% blockId="requestByUBXMsg" block="Lese Antwort mit UBX auf Abfrage %command"
+    //% advanced=true
     export function requestByUBXMsg(command: string): string {
         pubx = "";
         serial.writeLine(command);
@@ -348,11 +356,13 @@ namespace NEO6M_GPS {
     }
 
     //% blockId="getUBXPositionString" block="Lese UBX Position Zeichenkette"
+    //% advanced=true
     export function getUBXPositionString(): string {
         return requestByUBXMsg("$PUBX,00*33");
     }
 
     //% blockId="getUBXPosition" block="Lese UBX Position"
+    //% advanced=true
     export function getUBXPosition(): Array<string> {
         return string2array(requestByUBXMsg("$PUBX,00*33"), ",");
     }
