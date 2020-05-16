@@ -16,7 +16,7 @@ enum GPS_Format {
     SIGNED_DEG_DEC
 }
 
-//% weight=20 color=#935116 icon="\uf14e"
+//% weight=20 color=#935116 icon="\uf0ac"
 namespace NEO6M_GPS {
 
     let TX = SerialPin.C17;
@@ -39,6 +39,12 @@ namespace NEO6M_GPS {
     // blockId="serial_buffersize" block="serial receive buffer size %size"
     //% shim=NEO6M_GPS::setReceiveBufferSize
     function setReceiveBufferSize(size: number): void {
+        return;
+    }
+
+    // blockId=serial_writebuffer block="serial|write buffer %buffer=serial_readbuffer"
+    //% shim=NEO6M_GPS::writeBuffer
+    function writeBuffer(buffer: Buffer): void {
         return;
     }
 
