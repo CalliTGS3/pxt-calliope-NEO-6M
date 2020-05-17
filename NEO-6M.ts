@@ -16,7 +16,8 @@ enum GPS_Format {
     SIGNED_DEG_DEC
 }
 
-//% weight=20 color=#935116 icon="\uf0ac"
+//% weight=20 color=#935116 icon="\uf14e"
+// icon="\uf0ac"
 namespace NEO6M_GPS {
 
     let TX = SerialPin.C17;
