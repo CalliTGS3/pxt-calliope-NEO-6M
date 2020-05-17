@@ -46,9 +46,14 @@ namespace NEO6M_GPS {
     // blockId=serial_writebuffer block="serial|write buffer %buffer=serial_readbuffer"
     //% blockId="writeBuffer" block="seriell schreibe Zwischenspeicher %buffer"
     //% shim=NEO6M_GPS::writeBuffer
-    //% advanced=true
-    export function writeBuffer(buffer: Buffer): void {
+    function writeBuffer(buffer: Buffer): void {
         return;
+    }
+
+    //% blockId="writeConfig" block="Schreibe Konfiguration %buffer"
+    //% advanced=true
+    export function writeConfig(buffer: Buffer): void {
+        writeBuffer(buffer);
     }
 
     //% blockId="initGPS" block="Initialisiere Serielle Schnittstelle mit TX Pin %tx | RX Pin %rx | Baudrate %baud"
