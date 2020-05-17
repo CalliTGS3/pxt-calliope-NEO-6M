@@ -237,6 +237,8 @@ namespace NEO6M_GPS {
         let secint = parseInt(sec);
         let shiftedmin = (mns * Math.pow(10, seclen) + secint) / 60;
         let shiftedminstr = shiftedmin.toString()
+	// remove decimal places in case of float return by division
+	shiftedminstr = parseInt(shiftedminstr).toString();
         if (shiftedminstr.length < 5) { shiftedminstr = "0" + shiftedminstr }
         switch (gpsFormat) {
             case GPS_Format.DEG_DEC: // (hddd.ddddd°)
