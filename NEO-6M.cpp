@@ -6,9 +6,4 @@ namespace NEO6M_GPS {
         uBit.serial.setRxBufferSize(size < 255 ? size : 254);
     }
 
-    //%
-    void writeBuffer(Buffer buffer) {
-    if (!buffer) return;
-    uBit.serial.send(buffer->data, buffer->length);
-    }
 }
