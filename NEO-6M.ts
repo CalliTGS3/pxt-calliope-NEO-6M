@@ -38,7 +38,7 @@ namespace NEO6M_GPS {
     const UBX_TIMEOUT = 2000; // ms
 
     // blockId="serial_buffersize" block="serial receive buffer size %size"
-    //% shim=NEO6M_GPS::setReceiveBufferSize
+    // shim=NEO6M_GPS::setReceiveBufferSize
     function setReceiveBufferSize(size: number) {
         return;
     }
@@ -53,7 +53,7 @@ namespace NEO6M_GPS {
         RX = rx;
         BAUD = baud;
         serial.redirect(TX, RX, BAUD);
-        //setReceiveBufferSize(120);
+        serial.setRxBufferSize(120);
     }
 
     //% blockId="setGPSUnits" block="Setze GPS Einheiten auf Grad: %deg | Minuten: %mns | Sekunden: %sec"
