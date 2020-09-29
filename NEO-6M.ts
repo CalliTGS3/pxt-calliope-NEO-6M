@@ -53,7 +53,7 @@ namespace NEO6M_GPS {
         RX = rx;
         BAUD = baud;
         serial.redirect(TX, RX, BAUD);
-        setReceiveBufferSize(120);
+        //setReceiveBufferSize(120);
     }
 
     //% blockId="setGPSUnits" block="Setze GPS Einheiten auf Grad: %deg | Minuten: %mns | Sekunden: %sec"
