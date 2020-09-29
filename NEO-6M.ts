@@ -39,7 +39,7 @@ namespace NEO6M_GPS {
 
     // blockId="serial_buffersize" block="serial receive buffer size %size"
     //% shim=NEO6M_GPS::setReceiveBufferSize
-    function setReceiveBufferSize(size: number): void {
+    function setReceiveBufferSize(size: number) {
         return;
     }
 
@@ -47,7 +47,7 @@ namespace NEO6M_GPS {
     //% tx.defl=SerialPin.C17
     //% rx.defl=SerialPin.C16
     //% baud.defl=BaudRate.BaudRate9600
-    export function initGPS(tx: SerialPin, rx: SerialPin, baud: BaudRate): {
+    export function initGPS(tx: SerialPin, rx: SerialPin, baud: BaudRate) {
         // initialize serial port
         TX = tx;
         RX = rx;
