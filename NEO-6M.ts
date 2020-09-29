@@ -47,7 +47,7 @@ namespace NEO6M_GPS {
     //% tx.defl=SerialPin.C17
     //% rx.defl=SerialPin.C16
     //% baud.defl=BaudRate.BaudRate9600
-    export function initGPS(tx: SerialPin, rx: SerialPin, baud: BaudRate): void {
+    export function initGPS(tx: SerialPin, rx: SerialPin, baud: BaudRate): {
         // initialize serial port
         TX = tx;
         RX = rx;
