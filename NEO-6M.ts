@@ -49,6 +49,12 @@ namespace NEO6M_GPS {
         return;
     }
 
+    //% blockId="writeConfig" block="Schreibe Konfiguration %buffer"
+    //% advanced=true
+    export function writeConfig(buffer: Buffer): void {
+        writeBuffer(buffer);
+    }
+
     //% blockId="initGPS" block="Initialisiere Serielle Schnittstelle mit TX Pin %tx | RX Pin %rx | Baudrate %baud"
     //% tx.defl=SerialPin.C17
     //% rx.defl=SerialPin.C16
