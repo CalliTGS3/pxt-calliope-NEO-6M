@@ -9,6 +9,6 @@ namespace NEO6M_GPS {
     //%
     void writeBuffer(Buffer buffer, int size) {
         if (!buffer) return;
-        uBit.serial.send((unit8_t *)buffer, size);
+        uBit.serial.send((uint8_t *)buffer, size);
     }    
 }
