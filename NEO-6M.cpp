@@ -7,8 +7,8 @@ namespace NEO6M_GPS {
     }
 
     //%
-    void writeBuffer(Buffer buffer) {
-    if (!buffer) return;
-    uBit.serial.send(buffer->data, buffer->length);
+    void writeBuffer(Buffer buffer, int size) {
+        if (!buffer) return;
+        uBit.serial.send(buffer, size);
     }    
 }
